@@ -1,5 +1,24 @@
-%% UNDER CONSTRUCTION: seems oké
-function [ask,asks,delta,deltas] = ask_tri_tree(S_0,s,r,T,K,option,delta_range,delta_precision)
+function [ask,asks,delta,deltas] = ask_tri_tree(S_0,s,r,T,K,option,varargin)
+p = inputParser;
+addRequired(p,'S_0');
+addRequired(p,'s',@ispositive);
+addRequired(p,'r',@ispositive);
+addRequired(p,'T',@ispositive);
+addRequired(p,'K');
+addRequired(p,'option');
+defaultDelta_range = [-2,2];
+addOptional(p,'delta_range',defaultDelta_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
+defaultDelta_precision = 0.01;
+addOptional(p,'delta_precision',defaultDelta_precision,@ispositive);
+parse(p,S_0,s,r,T,K,option,varargin{:});
+S_0 = p.Results.S_0;
+s = p.Results.s;
+r = p.Results.r;
+T = p.Results.T;
+K = p.Results.K;
+option = p.Results.option;
+delta_range = p.Results.delta_range;
+delta_precision = p.Results.delta_precision;
 %states
 u = exp((r-s^2/2)*T+s*sqrt(3*T)); % up state
 m = exp((r-s^2/2)*T);             % middle state
