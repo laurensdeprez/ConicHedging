@@ -11,6 +11,8 @@ conic_delta_hedging_tri_tree.m : script for trinomial trees
 
 conic_delta_hedging_B_S.m : script for Black-Scholes
 
+multinomial_approx_VG.m : script for approximating the VG process with a multinomial tree
+
 ## distortion functions
 
 distortion.m : calling the different distortions
