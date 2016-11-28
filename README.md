@@ -1,6 +1,7 @@
 ConicHedging
 ============
 **License:** BSD 3-clause, see [LICENSE](LICENSE).
+
 **Documentation**, see [Documentation](documentation.md)
 
 Code to perform hedging in the conic finance framework inspired 
