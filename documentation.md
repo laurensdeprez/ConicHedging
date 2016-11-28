@@ -56,3 +56,7 @@ isprobabilty.m : check if input is  numeric and between zero and one
 ispositive.m : check if input is  numeric and positive
 
 *ACF: Applied Conic Finance by D. Madan and W. Schoutens 
+
+## other functions
+
+cond_prob_multinomial : determine conditional jump probabilities for multinomial tree when approximating a VG process
