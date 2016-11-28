@@ -1,9 +1,9 @@
 function f = payoff(S_T,K,type)
     p = inputParser();
-    validType = {'call','put'};
+    validType = {'call','put','callspread'};
     checkType = @(x) any(validatestring(x,validType));
-    addRequired(p,'S_T',@ispositive);
-    addRequired(p,'K',@ispositive);
+    addRequired(p,'S_T');
+    addRequired(p,'K');
     addRequired(p,'type',checkType);
     parse(p,S_T,K,type);
     S_T = p.Results.S_T;
@@ -13,6 +13,8 @@ function f = payoff(S_T,K,type)
         case 'call'
             f = payoff_call(S_T,K);        
         case 'put'
-            f = payoff_put(S_T,K);         
+            f = payoff_put(S_T,K);  
+        case 'callspread'
+            f = payoff_callspread(S_T,K);
     end
 end
