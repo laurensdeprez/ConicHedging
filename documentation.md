@@ -3,15 +3,17 @@ ConicHedging
 
 ## scripts
 
-Example5_3.m : script for example 5.3 in ACF*
+Example5_3.m : script for example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
 
-conic_delta_hedging_bin_tree.m : script for binomial trees
+conic_delta_hedging_bin_tree.m : script for delta hedging in binomial trees
 
-conic_delta_hedging_tri_tree.m : script for trinomial trees
+conic_delta_hedging_tri_tree.m : script for delta hedging in trinomial trees
 
-conic_delta_hedging_B_S.m : script for Black-Scholes
+conic_delta_hedging_B_S.m : script for delta hedging in Black-Scholes
 
 multinomial_approx_VG.m : script for approximating the VG process with a multinomial tree
+
+conic_dynamic_hedging.m : script for dynamic hedging 
 
 ## distortion functions
 
@@ -55,8 +57,10 @@ isprobabilty.m : check if input is  numeric and between zero and one
 
 ispositive.m : check if input is  numeric and positive
 
-*ACF: Applied Conic Finance by D. Madan and W. Schoutens 
-
 ## other functions
 
-cond_prob_multinomial : determine conditional jump probabilities for multinomial tree when approximating a VG process
+cond_prob_multinomial.m : determine conditional jump probabilities for multinomial tree when approximating a VG process
+
+states_tri_tree.m : calculate the states u, m and d for a trinomial tree
+
+<a name="myfootnote1">1</a> ACF: Applied Conic Finance by D. Madan and W. Schoutens 
