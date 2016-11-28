@@ -1,4 +1,4 @@
-function [p_j,q_j] = cond_prob_multinomial(M,delta,C_VG,G_VG,M_VG)
+function ps = cond_prob_multinomial(M,delta,C_VG,G_VG,M_VG)
     B = zeros(1,M);
     fun = @(x) C_VG*exp(-M_VG*x)/x;
     for ii=1:M
@@ -12,6 +12,6 @@ function [p_j,q_j] = cond_prob_multinomial(M,delta,C_VG,G_VG,M_VG)
 
     p_j = (A/sum(A+B));
     q_j = (B/sum(A+B));
-
+    ps = [p_j; q_j];
 end
 
