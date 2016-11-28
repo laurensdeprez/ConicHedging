@@ -63,4 +63,4 @@ cond_prob_multinomial.m : determine conditional jump probabilities for multinomi
 
 states_tri_tree.m : calculate the states u, m and d for a trinomial tree
 
-<a name="myfootnote1"><sup>1</sup></a> ACF: Applied Conic Finance by D. Madan and W. Schoutens 
+<sup><a name="myfootnote1">1</a><\sup> ACF: Applied Conic Finance by D. Madan and W. Schoutens 
