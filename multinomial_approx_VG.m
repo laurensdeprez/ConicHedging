@@ -11,10 +11,8 @@ C_VG = 1/v;
 G_VG = 1/(sqrt(th^2*v^2/4+s^2*v/2)-th*v/2);
 M_VG = 1/(sqrt(th^2*v^2/4+s^2*v/2)+th*v/2);
 
-[p_j,q_j] = cond_prob_multinomial(M,delta,C_VG,G_VG,M_VG);
-
 U = linspace(-20,20,1000);
-phis = char_function_multinomial(M,U,delta,p,p_j,q_j,N);
+phis = char_function_multinomial(M,U,delta,p,N,C_VG,G_VG,M_VG);
 phis_VG = char_function_VG(U,C_VG,G_VG,M_VG);
 
 figure()
@@ -33,15 +31,15 @@ legend('multinomial','VG')
 title(['p = ',num2str(p),' en delta = ',num2str(delta)])
 
 
-%% optimize 
-fun = @(u,x)(abs(char_function_VG(u,C_VG,G_VG,M_VG)-char_function_multinomial(M,u,x(1),x(2),p_j,q_j,N)));
-fun2 = @(x)(integral(@(u)fun(u,x), -20, 20,'ArrayValued',true));
-x0 = [0.0740,0.9407];
-x = fminunc(fun2,x0);
+%% optimize
+x0 = [0.0740,0.9407];%[delta,p];%
+x = fit_multinomial_VG(M,N,C_VG,G_VG,M_VG,x0);
 delta = x(1);
 p = x(2);
+disp(x)
 
-phis = char_function_multinomial(M,U,delta,p,p_j,q_j,N);
+
+phis = char_function_multinomial(M,u,delta,p,N,C_VG,G_VG,M_VG);
 
 figure()
 plot(U,real(phis))
