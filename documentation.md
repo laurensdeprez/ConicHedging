@@ -23,9 +23,7 @@ MaxVar.m    : MAXVAR distortion function
 
 MinMAxVar.m : MINMAXVAR distortion function
 
-MaxMinVar.m : MAXMINVAR distortion function
-
-## 
+MaxMinVar.m : MAXMINVAR distortion function 
 
 ## pricing functions
 
@@ -42,6 +40,12 @@ payoff.m : calling different payoff functions
 payoff_call.m : payoff of European call option
 
 payoff_put.m : payoff of European put option
+
+## characteristic functions
+
+char_function_multinomial.m : characteristic function for multinomial tree
+
+char_function_VG.m : characteristic function for VG process
 
 ## test functions
 
