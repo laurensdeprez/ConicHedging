@@ -25,17 +25,20 @@ MinVar.m    : MINVAR distortion function
 
 MaxVar.m    : MAXVAR distortion function
 
-MinMAxVar.m : MINMAXVAR distortion function
+MinMaxVar.m : MINMAXVAR distortion function
 
 MaxMinVar.m : MAXMINVAR distortion function 
 
 ## pricing functions
 
-***_bin_tree.m : ask and bid price calculation functions in binomial tree
+bid_bin_tree.m : bid price calculation functions in binomial tree
+ask_bin_tree.m : ask price calculation functions in binomial tree
 
-***_tri_tree.m : ask and bid price calculation functions in trinomial tree
+bid_tri_tree.m : bid price calculation functions in trinomial tree
+ask_tri_tree.m : ask price calculation functions in trinomial tree
 
-***_B_S.m : ask and bid price calculation functions under Black-Scholes
+bid_B_S.m : bid price calculation functions under Black-Scholes
+ask_B_S.m : ask price calculation functions under Black-Scholes
 
 ## payoff functions
 
@@ -44,6 +47,8 @@ payoff.m : calling different payoff functions
 payoff_call.m : payoff of European call option
 
 payoff_put.m : payoff of European put option
+
+payoff_callspread : payoff of call spread option	
 
 ## characteristic functions
 
