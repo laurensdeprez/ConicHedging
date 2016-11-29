@@ -32,12 +32,15 @@ MaxMinVar.m : MAXMINVAR distortion function
 ## pricing functions
 
 bid_bin_tree.m : bid price calculation functions in binomial tree
+
 ask_bin_tree.m : ask price calculation functions in binomial tree
 
 bid_tri_tree.m : bid price calculation functions in trinomial tree
+
 ask_tri_tree.m : ask price calculation functions in trinomial tree
 
 bid_B_S.m : bid price calculation functions under Black-Scholes
+
 ask_B_S.m : ask price calculation functions under Black-Scholes
 
 ## payoff functions
