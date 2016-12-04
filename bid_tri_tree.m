@@ -47,6 +47,7 @@ end
 p_u = 1/6;                        % jump up 
 p_m = 2/3;                        % jump middle
 p_d = 1/6;                        % jump down
+ps = [p_u,p_m,p_d];
 %optimize  
 if hedged
     n = (delta_range(2)-delta_range(1))/delta_precision;
@@ -60,43 +61,10 @@ for i=1:n
     pi_u = f_u + deltas(i)*(u - exp(r*T))*S_0;
     pi_m = f_m + deltas(i)*(m - exp(r*T))*S_0;
     pi_d = f_d + deltas(i)*(d - exp(r*T))*S_0;
-    check = [(pi_u>=pi_m),(pi_u>=pi_d),(pi_m>=pi_d)];
-    % can this be programmed cleaner?
-    check = string(double(check));
-    check = strcat(check(1),check(2),check(3));
-    switch check
-        case '111'
-            p_dd = distortion(p_d,dist,lambda);
-            p_md = distortion(p_m+p_d,dist,lambda)-distortion(p_d,dist,lambda);
-            p_ud = 1-distortion(p_m+p_d,dist,lambda);
-        case '110'
-            p_md = distortion(p_m,dist,lambda);
-            p_dd = distortion(p_m+p_d,dist,lambda)-distortion(p_m,dist,lambda);
-            p_ud = 1-distortion(p_m+p_d,dist,lambda);
-        case '101'
-            error('impossible due to transitivity in bid_tri_tree')
-        case '011'
-            p_dd = distortion(p_d,dist,lambda);
-            p_ud = distortion(p_u+p_d,dist,lambda)-distortion(p_d,dist,lambda);
-            p_md = 1-distortion(p_u+p_d,dist,lambda);
-        case '100'
-            p_md = distortion(p_m,dist,lambda);
-            p_ud = distortion(p_u+p_m,dist,lambda)-distortion(p_m,dist,lambda);
-            p_dd = 1-distortion(p_u+p_m,dist,lambda);
-        case '010'
-            error('impossible due to transitivity in bid_tri_tree')
-        case '001'
-            p_ud = distortion(p_u,dist,lambda);
-            p_dd = distortion(p_u+p_d,dist,lambda)-distortion(p_u,dist,lambda);
-            p_md = 1-distortion(p_u+p_d,dist,lambda);
-        case '000'
-            p_ud = distortion(p_u,dist,lambda);
-            p_md = distortion(p_u+p_m,dist,lambda)-distortion(p_u,dist,lambda);
-            p_dd = 1-distortion(p_u+p_m,dist,lambda);
-        otherwise
-            error('something went wrong in bid_tri_tree')
-    end 
-    bids(i) = exp(-r*T)*(p_ud*pi_u+p_md*pi_m+p_dd*pi_d);
+    [sorted_pi,I]=sort([pi_u,pi_m,pi_d]);
+    dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
+    dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
+    bids(i) = exp(-r*T)*sum((sorted_pi).*(dist_sorted_ps));
 end
 [bid,i] = max(bids);
 delta = deltas(i);
