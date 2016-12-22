@@ -30,7 +30,7 @@ title(['p = ',num2str(p),' en delta = ',num2str(delta)])
 
 
 %% optimize
-if false
+if true
 x0 = [0.07,0.9];
 x = fit_multinomial_VG(M,N,C_VG,G_VG,M_VG,x0);
 delta = x(1);
@@ -40,17 +40,19 @@ disp(x)
 phis = char_function_multinomial(M,U,delta,p,N,C_VG,G_VG,M_VG);
 
 figure()
-plot(U,real(phis))
+plot(U,real(phis),'LineWidth',2)
 hold on 
-plot(U,real(phis_VG))
+plot(U,real(phis_VG),'LineWidth',2)
 axis([-20,20,-0.2,1.2])
 title(['p = ',num2str(p),' en delta = ',num2str(delta)])
-legend('multinomial','VG')
+leg = legend('multinomial','VG');
+set(leg,'FontSize',12)
 figure()
-plot(U,imag(phis))
+plot(U,imag(phis),'LineWidth',2)
 hold on
-plot(U,imag(phis_VG))
+plot(U,imag(phis_VG),'LineWidth',2)
 axis([-20,20,-0.5,0.5])
-legend('multinomial','VG')
+leg = legend('multinomial','VG');
+set(leg,'FontSize',12)
 title(['p = ',num2str(p),' en delta = ',num2str(delta)])
 end
