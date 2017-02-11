@@ -52,11 +52,11 @@ ps = [p_u,p_m,p_d];
 if hedged
     n = (delta_range(2)-delta_range(1))/delta_precision;
     deltas = linspace(delta_range(1),delta_range(2),n); 
-    bids = zeros(1,n);
 else
     n = 1;
     deltas = 0;
 end 
+bids = zeros(1,n);
 for i=1:n
     pi_u = f_u + deltas(i)*(u - exp(r*T))*S_0;
     pi_m = f_m + deltas(i)*(m - exp(r*T))*S_0;
