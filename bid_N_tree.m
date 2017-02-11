@@ -47,8 +47,8 @@ x = -(1:M)*delta;
 y = (1:M)*delta;
 % states
 % kill the hardcoding later
-num_prices = 800;
-[~,S] = NUG(115,200,50,0.075,num_prices);
+num_prices = 200;
+[logS,S] = NUG(K(1),150,50,0.075,num_prices);
 
 % payouts
 f = zeros(num_prices,1,2);
@@ -61,26 +61,22 @@ deltas = linspace(delta_range(1),delta_range(2),n);
 hedge_bids = zeros(1,n);
 
 % optim section
-for ii=2:(N+1) %time loop (backwards)
+for ii=2:(N+1) %time loop 
     for jj=1:num_prices %stock prices loop
-        local_tree = [log(S(jj))+x,log(S(jj)),log(S(jj))+y];
-        local_tree = interp1(log(S),f(:,ii-1,1),local_tree,'PCHIP','extrap');
-        [sorted_tree,I]=sort(local_tree);
+        local_tree = [logS(jj)+x,logS(jj),logS(jj)+y];
+        local_tree_f = interp1(logS,f(:,ii-1,1),local_tree,'PCHIP','extrap');
+        [sorted_tree_f,I]=sort(local_tree_f);
         dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
-        dist_ps = [dist_cdf(1),diff(dist_cdf)];
-        f(jj,ii,1) = exp(-r*dt)*sum((dist_ps).*(sorted_tree));
-%         for kk=1:length(deltas)%delta hedge loop
-%             local_tree = [S(jj)+x,S(jj),S(jj)+y];
-%             hedge = f(:,ii-1,2) + deltas(kk)*(S - exp(r*dt))*S(jj);
-%             local_tree = interp1(S,hedge,local_tree,'PCHIP','extrap');
-%             [sorted_tree,I]=sort(local_tree);
-%             sorted_ps = ps(I);
-%             cdf = cumsum(sorted_ps);
-%             dist_cdf = distortion(cdf,dist,lambda);
-%             dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
-%             hedge_bids(kk) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_tree));
-%         end
-%         f(jj,ii,2) = min(hedge_bids);
+        dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
+        f(jj,ii,1) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_tree_f));
+        for kk=1:length(deltas)%delta hedge loop
+            hedge = local_tree_f + deltas(kk)*(exp(local_tree) - exp(r*dt)*S(jj));
+            [sorted_hedge,I]=sort(hedge);
+            dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
+            dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
+            hedge_bids(kk) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_hedge));
+        end
+        f(jj,ii,2) = min(hedge_bids);
     end
 end 
 end
