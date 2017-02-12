@@ -78,7 +78,7 @@ for ii=2:(N+1) %time loop
             dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
             hedge_asks(kk) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_hedge));
         end
-        f(jj,ii,2) = max(hedge_asks);
+        f(jj,ii,2) = min(hedge_asks);
     end
 end 
 end
