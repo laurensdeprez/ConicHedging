@@ -1,9 +1,7 @@
-function [bid,bids,delta_b,ask,asks,delta_a,deltas,u_ask,u_bid] = pricing_cont_model(S_0,S_T,q,s,r,T,N,K,option,dist_type,lambda,varargin)
+function [bid,bids,delta_b,ask,asks,delta_a,deltas,u_ask,u_bid] = pricing_cont_model(S_0,S_T,r,T,N,K,option,dist_type,lambda,varargin)
     p = inputParser;
     addRequired(p,'S_0',@ispositive);
     addRequired(p,'S_T',@ispositive);
-    addRequired(p,'q',@isnumeric);
-    addRequired(p,'s',@ispositive);
     addRequired(p,'r',@ispositive);
     addRequired(p,'T',@ispositive);
     addRequired(p,'N',@ispositive);
@@ -15,7 +13,7 @@ function [bid,bids,delta_b,ask,asks,delta_a,deltas,u_ask,u_bid] = pricing_cont_m
     addOptional(p,'delta_range',defaultDelta_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
     defaultDelta_precision = 0.01;
     addOptional(p,'delta_precision',defaultDelta_precision,@ispositive);
-    parse(p,S_0,S_T,q,s,r,T,N,K,option,dist_type,lambda,varargin{:});
+    parse(p,S_0,S_T,r,T,N,K,option,dist_type,lambda,varargin{:});
     S_0 = p.Results.S_0;
     S_T = p.Results.S_T;
     r = p.Results.r;
