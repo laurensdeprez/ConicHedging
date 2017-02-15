@@ -55,4 +55,3 @@ end
 [bid,I] = max(bids);
 delta = deltas(I);
 end
-

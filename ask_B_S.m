@@ -55,4 +55,3 @@ end
 [ask,I] = min(asks);
 delta = deltas(I);
 end
-
