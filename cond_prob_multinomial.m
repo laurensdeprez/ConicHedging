@@ -14,4 +14,3 @@ function ps = cond_prob_multinomial(M,delta,C_VG,G_VG,M_VG)
     q_j = (B/sum(A+B));
     ps = [p_j; q_j];
 end
-
