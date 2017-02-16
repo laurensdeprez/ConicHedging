@@ -8,6 +8,7 @@ function S_T = B_S(S_0,q,s,r,T,N)
     addRequired(p,'N',@ispositive);
     parse(p,S_0,q,s,r,T,N);
     S_0 = p.Results.S_0;
+    q = p.Results.q;
     s = p.Results.s;
     r = p.Results.r;
     T = p.Results.T;
