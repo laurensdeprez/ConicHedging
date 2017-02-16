@@ -1,8 +1,7 @@
-function [bid,bids,delta,deltas] = bid_B_S(S_0,q,s,r,T,N,K,option,dist_type,lambda,varargin)
+function [bid,bids,delta,deltas] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,varargin)
 p = inputParser;
 addRequired(p,'S_0');
-addRequired(p,'q',@isnumeric);
-addRequired(p,'s',@ispositive);
+addRequired(p,'S_T');
 addRequired(p,'r',@ispositive);
 addRequired(p,'T',@ispositive);
 addRequired(p,'N',@ispositive);
@@ -16,9 +15,9 @@ defaultDelta_precision = 0.01;
 addOptional(p,'delta_precision',defaultDelta_precision,@ispositive);
 defaultHedged = true;
 addOptional(p, 'hedged',defaultHedged, @(x)validateattributes(x,{'logical'},{'numel',1}))
-parse(p,S_0,q,s,r,T,N,K,option,dist_type,lambda,varargin{:});
+parse(p,S_0,S_T,r,T,N,K,option,dist_type,lambda,varargin{:});
 S_0 = p.Results.S_0;
-s = p.Results.s;
+S_T = p.Results.S_T;
 r = p.Results.r;
 T = p.Results.T;
 N = p.Results.N;
@@ -29,9 +28,6 @@ lambda = p.Results.lambda;
 delta_range = p.Results.delta_range;
 delta_precision = p.Results.delta_precision;
 hedged = p.Results.hedged;
-% Monte Carlo 
-W = normrnd(0,sqrt(T),[N,1]);
-S_T = S_0*exp((r-q-s^2/2)*T+s*W);
 % payoff
 f = payoff(S_T,K,option);
 % distorted probabilities
