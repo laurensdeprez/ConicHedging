@@ -2,7 +2,7 @@ close all;
 %% conic delta hedging under B-S
 
 S_0 = 100;                       % init. stock price
-q = 0;                           % trend 
+q = 0;                           % dividend 
 s = 0.2;                         % volatility
 r = 0.01;                        % interest
 T = 1/12;                        % maturity
