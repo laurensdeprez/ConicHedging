@@ -31,7 +31,7 @@ delta_precision = p.Results.delta_precision;
 hedged = p.Results.hedged;
 % Monte Carlo 
 W = normrnd(0,sqrt(T),[N,1]);
-S_T = S_0*exp((q-s^2/2)*T+s*W);
+S_T = S_0*exp((r-q-s^2/2)*T+s*W);
 % payoff
 f = payoff(S_T,K,option);
 % distorted probabilities
