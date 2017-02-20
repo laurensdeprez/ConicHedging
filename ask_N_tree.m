@@ -1,4 +1,4 @@
-function [S,f] = ask_N_tree(S_0,r,delta,p0,M,N,C_VG,G_VG,M_VG,T,K,option,varargin)
+function [S,f] = ask_N_tree(S_0,r,delta,p0,M,N,s,v,th,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');
 addRequired(p,'r',@ispositive);
@@ -6,9 +6,9 @@ addRequired(p,'delta',@ispositive);
 addRequired(p,'p0',@isprobability);
 addRequired(p,'M',@ispositive);%integer
 addRequired(p,'N',@ispositive);%integer
-addRequired(p,'C_VG');
-addRequired(p,'G_VG');
-addRequired(p,'M_VG');
+addRequired(p,'s',@isnumeric);
+addRequired(p,'v',@isnumeric);
+addRequired(p,'th',@isnumeric);
 addRequired(p,'T',@ispositive);
 addRequired(p,'K');
 addRequired(p,'option');
@@ -20,16 +20,16 @@ defaultDist = 'MinMaxVar';
 addOptional(p,'dist',defaultDist);
 defaultLambda = 0.01;
 addOptional(p,'lambda',defaultLambda);
-parse(p,S_0,r,delta,p0,M,N,C_VG,G_VG,M_VG,T,K,option,varargin{:});
+parse(p,S_0,r,delta,p0,M,N,s,v,th,T,K,option,varargin{:});
 S_0 = p.Results.S_0;
 r = p.Results.r;
 delta = p.Results.delta;
 p0 = p.Results.p0;
 M = p.Results.M;
 N = p.Results.N;
-G_VG = p.Results.G_VG;
-C_VG = p.Results.C_VG;
-M_VG = p.Results.M_VG;
+s = p.Results.s;
+v = p.Results.v;
+th = p.Results.th;
 T = p.Results.T;
 K = p.Results.K;
 option = p.Results.option;
@@ -38,12 +38,13 @@ delta_precision = p.Results.delta_precision;
 dist = p.Results.dist;
 lambda = p.Results.lambda;
 
+[C_VG,G_VG,M_VG] = VG_param(s,v,th);
 dt = T/N;
 ps = cond_prob_multinomial(M,delta,C_VG,G_VG,M_VG);
 p_j = ps(1,:);
 q_j = ps(2,:);
 ps = [(1-p0)*p_j,p0,(1-p0)*q_j];
-ps = floor(ps*10^5)/10^5;
+ps = floor(ps*10^11)/10^11;
 x = -(1:M)*delta;
 y = (1:M)*delta;
 % states
@@ -56,6 +57,8 @@ f = zeros(num_prices,N+1,2);
 f(:,1,1) = payoff(S,K,option);
 f(:,1,2) = payoff(S,K,option);
 
+omega = 1/v*log(1-s^2/2*v-th*v);
+
 % hedging vector
 n = (delta_range(2)-delta_range(1))/delta_precision;
 deltas = linspace(delta_range(1),delta_range(2),n); 
@@ -64,7 +67,7 @@ hedge_asks = zeros(1,n);
 % optim section
 for ii=2:(N+1) %time loop 
     for jj=1:num_prices %stock prices loop
-        local_tree = exp([logS(jj)+x,logS(jj),logS(jj)+y]);
+        local_tree = exp(logS(jj)+(r+omega)*dt+[x,0,y]);
         local_tree_f = interp1(S,f(:,ii-1,1),local_tree,'PCHIP','extrap');
         [sorted_tree_f,I]=sort(local_tree_f,'descend');
         dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
