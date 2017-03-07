@@ -6,17 +6,17 @@ q = 0;                           % dividend
 s = 0.2;                         % volatility
 v = 0.75;                        % param 2 of VG
 th = -0.3;                       % param 3 of VG
-r = 0.01;                        % interest
-T = 1/12;                        % maturity
-K = S_0;                         % strike ATM
+r = 0.02;                        % interest
+T = 1/52;                        % maturity
+K = [110,120];%S_0;                         % strike ATM
 N = 10000;                       % # monte carlo simulations (WARNING: bigger=slower)
 dist_type = 'MinMaxVar';         % distortion function
-lambda = 0.10;                   % parameter for distortion               
-delta_range = [-2,2];            % [delta_min, delta_max]
-delta_precision = 0.01;          % step between deltas
-option = 'call';                 % type of option considered
+lambda = 0.015;                  % parameter for distortion               
+delta_range = [-2,0];            % [delta_min, delta_max]
+delta_precision = 0.05;          % step between deltas
+option = 'callspread';                 % type of option considered
 
-if true
+if false
 %% hedging
 % stock process
 S_T = VG_stock(S_0,q,s,v,th,r,T,N);
