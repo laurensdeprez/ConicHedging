@@ -1,4 +1,4 @@
-function [S,f] = bid_N_tree(S_0,r,delta,p0,M,N,s,v,th,T,K,option,varargin)
+function [S,f,Delta,deltas] = bid_N_tree(S_0,r,delta,p0,M,N,s,v,th,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');
 addRequired(p,'r',@ispositive);
@@ -49,7 +49,7 @@ x = -(1:M)*delta;
 y = (1:M)*delta;
 % states
 % kill the hardcoding later
-num_prices = 100;
+num_prices = 50;
 [logS,S] = NUG(S_0,150,50,0.075,num_prices);
 
 % payouts
@@ -57,6 +57,7 @@ f = zeros(num_prices,N+1,2);
 f(:,1,1) = payoff(S,K,option);
 f(:,1,2) = payoff(S,K,option);
 
+Delta = zeros(num_prices,N+1);
 omega = 1/v*log(1-s^2/2*v-th*v);
 
 % hedging vector
@@ -69,8 +70,7 @@ for ii=2:(N+1) %time loop
     for jj=1:num_prices %stock prices loop
         local_tree = exp(logS(jj)+(r+omega)*dt+[x,0,y]);
         local_tree_f = interp1(S,f(:,ii-1,1),local_tree,'PCHIP','extrap');
-        [sorted_tree_f,I]=sort(local_tree_f);
-        %[sorted_tree_f,I] = bubblesort(local_tree_f);
+        [sorted_tree_f,I] = bubblesort(local_tree_f);
         dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
         dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
         f(jj,ii,1) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_tree_f));
@@ -78,12 +78,12 @@ for ii=2:(N+1) %time loop
             local_tree_f = interp1(S,f(:,ii-1,2),local_tree,'PCHIP','extrap');
             hedge = local_tree_f + deltas(kk)*(local_tree - exp(r*dt)*S(jj));
             [sorted_hedge,I]=sort(hedge);
-            %[sorted_hedge,I]=bubblesort(hedge);
             dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
             dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
             hedge_bids(kk) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_hedge));
         end
-        f(jj,ii,2) = max(hedge_bids);
+        [f(jj,ii,2),I] = max(hedge_bids);
+        Delta(jj,ii) = deltas(I);
     end
 end 
 end
