@@ -8,7 +8,7 @@ addRequired(p,'K');
 addRequired(p,'option');
 defaultDelta_range = [-2,2];
 addOptional(p,'delta_range',defaultDelta_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
-defaultDelta_precision = 100;
+defaultDelta_precision = 1000;
 addOptional(p,'delta_precision',defaultDelta_precision,@ispositive);
 defaultHedging_type = 'Delta';
 addOptional(p,'hedging_type', defaultHedging_type)
@@ -83,7 +83,7 @@ switch hedging_type
         end
         [ask,i] = min(asks);
         delta = deltas(i);
-        gamma = false; 
+        gamma = false;
     case 'Delta-Gamma'
         asks = zeros(n_g,n);
         exp_value = sum(ps.*([((u - exp(r*T))*S_0)^2,((m - exp(r*T))*S_0)^2,((d - exp(r*T))*S_0)^2]));
@@ -98,8 +98,8 @@ switch hedging_type
                 asks(j,i) = exp(-r*T)*sum((sorted_pi).*(dist_sorted_ps));
             end
         end
-        ask = max(max(asks));
-        [j,i] = find(asks==max(max(asks)));
+        ask = min(min(asks));
+        [j,i] = find(asks==min(min(asks)));
         delta = deltas(i);
         gamma = gammas(j);
     otherwise

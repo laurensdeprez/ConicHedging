@@ -12,13 +12,13 @@ defaultDelta_precision = 1000;
 addOptional(p,'delta_precision',defaultDelta_precision,@ispositive);
 defaultHedging_type = 'Delta';
 addOptional(p,'hedging_type', defaultHedging_type)
-defaultGamma_range = [-2,2];
+defaultGamma_range = [-0.1,0.1];
 addOptional(p,'gamma_range',defaultGamma_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
 defaultGamma_precision = 100;
 addOptional(p,'gamma_precision',defaultGamma_precision,@ispositive);
 defaultDist = 'MinMaxVar';
 addOptional(p,'dist',defaultDist);
-defaultLambda = 0.01;%0.25;
+defaultLambda = 0.01;
 addOptional(p,'lambda',defaultLambda);
 defaultOld_bid = [0,0,0];
 addOptional(p,'old_bid',defaultOld_bid,@(x)validateattributes(x,{'numeric'},{'numel',3}))
