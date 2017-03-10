@@ -5,7 +5,7 @@ r = 0.01;                        % interest
 T = 1;                           % maturity
 K = S_0;                         % strike ATM
 delta_range = [-2,2];            % [delta_min, delta_max]
-delta_precision = 0.001;         % step between deltas
+delta_precision = 4000;          % number of deltas
 option_type = 'call';            % option type
 
 %% risk neutral
