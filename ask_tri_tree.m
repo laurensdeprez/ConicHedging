@@ -8,13 +8,13 @@ addRequired(p,'K');
 addRequired(p,'option');
 defaultDelta_range = [-2,2];
 addOptional(p,'delta_range',defaultDelta_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
-defaultDelta_precision = 1000;
+defaultDelta_precision = 4000;
 addOptional(p,'delta_precision',defaultDelta_precision,@ispositive);
 defaultHedging_type = 'Delta';
 addOptional(p,'hedging_type', defaultHedging_type)
 defaultGamma_range = [-0.1,0.1];
 addOptional(p,'gamma_range',defaultGamma_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
-defaultGamma_precision = 100;
+defaultGamma_precision = 200;
 addOptional(p,'gamma_precision',defaultGamma_precision,@ispositive);
 defaultDist = 'MinMaxVar';
 addOptional(p,'dist',defaultDist);
