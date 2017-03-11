@@ -72,8 +72,8 @@ switch hedging_type
                 end 
             end
         end
-        bid = min(min(bids));
-        [j,i] = find(bids==min(min(bid)));
+        bid = max(max(bids));
+        [j,i] = find(bids==max(max(bid)));
         delta = deltas(i);
         gamma = gammas(j);
     otherwise
