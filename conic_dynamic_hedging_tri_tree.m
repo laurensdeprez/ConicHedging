@@ -7,7 +7,7 @@ s = 0.2;             % volatility
 r = 0.01;            % risk free interest
 dist = 'MinMaxVar';  % distortion function
 lambda = 0.125;      % distortion parameter
-delta_gamma = false; % delta-hedging
+delta_gamma = true; % delta-hedging
 %% states
 [u,m,d] = states_tri_tree(r,s,dt);
 %% pay off
@@ -20,15 +20,15 @@ disp(['pay-offs ',num2str([f_uu,f_um,f_mm,f_dm,f_dd])])
 %% Bid hedging
 if delta_gamma
 % intermediate state (delta-gamma hedged)
-[bid_u,~,delta_u,~,gamma_u,~] = bid_tri_tree(u*S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
-[bid_m,~,delta_m,~,gamma_m,~] = bid_tri_tree(m*S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
-[bid_d,~,delta_d,~,gamma_d,~] = bid_tri_tree(d*S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
+[bid_u,~,delta_u,~,gamma_u,~] = bid_tri_tree(u*S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
+[bid_m,~,delta_m,~,gamma_m,~] = bid_tri_tree(m*S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
+[bid_d,~,delta_d,~,gamma_d,~] = bid_tri_tree(d*S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
 disp(['intermediate bids (d-g) ',num2str([bid_u,bid_m,bid_d])])
 disp(['intermediate bid deltas (d-g) ',num2str([delta_u,delta_m,delta_d])])
 disp(['intermediate bid gammas (d-g) ',num2str([gamma_u,gamma_m,gamma_d])])
 % final state (delta-gamma hedged)
 old_bid = [bid_u,bid_m,bid_d];
-[bid,~,delta,~,gamma,~] = bid_tri_tree(S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma','old_bid',old_bid);
+[bid,~,delta,~,gamma,~] = bid_tri_tree(S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma','old_bid',old_bid);
 disp(['final bid (d-g) ',num2str(bid)])
 disp(['final bid delta (d-g) ',num2str(delta)])
 disp(['final bid gamma (d-g) ',num2str(gamma)])
@@ -56,15 +56,15 @@ disp(['final bid ',num2str(bid)])
 %% Ask hedging
 if delta_gamma
 % intermediate state (delta-gamma hedged)
-[ask_u,~,delta_u,~,gamma_u,~] = ask_tri_tree(u*S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
-[ask_m,~,delta_m,~,gamma_m,~] = ask_tri_tree(m*S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
-[ask_d,~,delta_d,~,gamma_d,~] = ask_tri_tree(d*S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
+[ask_u,~,delta_u,~,gamma_u,~] = ask_tri_tree(u*S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
+[ask_m,~,delta_m,~,gamma_m,~] = ask_tri_tree(m*S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
+[ask_d,~,delta_d,~,gamma_d,~] = ask_tri_tree(d*S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma');
 disp(['intermediate asks (d-g) ',num2str([ask_u,ask_m,ask_d])])
 disp(['intermediate ask deltas (d-g) ',num2str([delta_u,delta_m,delta_d])])
 disp(['intermediate ask gammas (d-g) ',num2str([gamma_u,gamma_m,gamma_d])])
 % final state (delta-gamma hedged)
 old_ask = [ask_u,ask_m,ask_d];
-[ask,~,delta,~,gamma,~] = ask_tri_tree(S_0,s,r,T,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma','old_ask',old_ask);
+[ask,~,delta,~,gamma,~] = ask_tri_tree(S_0,s,r,dt,K,option,'dist',dist,'lambda',lambda,'hedging_type','Delta-Gamma','old_ask',old_ask);
 disp(['final ask (d-g) ',num2str(ask)])
 disp(['final ask delta (d-g) ',num2str(delta)])
 disp(['final ask gamma (d-g) ',num2str(gamma)])
