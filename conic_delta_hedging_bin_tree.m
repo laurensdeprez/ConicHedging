@@ -45,25 +45,3 @@ ylabel('ask portfolio','FontSize',15)
 leg = legend('\Delta line','\Delta_{opt}','-\Delta_{tree}');
 set(leg,'FontSize',12)
 set(gca,'fontsize',12)
-
-%% bid (delta-gamma)
-[bid,bids,delta_b,deltas,gamma_b,gammas] = bid_bin_tree(S_0,s,r,T,K,type,'hedging_type','Delta-Gamma','delta_range',delta_range,'delta_precision',delta_precision);
-
-figure()
-colormap('jet')
-contourf(gammas,flip(deltas),flipud(transpose(bids)),20);
-xlabel('\Gamma','FontSize',15)
-ylabel('\Delta','FontSize',15)
-c = colorbar;
-ylabel(c,'bid price','FontSize',15)
-
-%% ask (delta-gamma)
-[ask,asks,delta_a,deltas,gamma_a,gammas] = ask_bin_tree(S_0,s,r,T,K,type,'hedging_type','Delta-Gamma','delta_range',delta_range,'delta_precision',delta_precision);
-
-figure()
-colormap('jet')
-contourf(gammas,flip(deltas),flipud(transpose(asks)),20);
-xlabel('\Gamma','FontSize',15)
-ylabel('\Delta','FontSize',15)
-c = colorbar;
-ylabel(c,'ask price','FontSize',15)
