@@ -7,7 +7,7 @@ s = 0.2;             % volatility
 r = 0.01;            % risk free interest
 dist = 'MinMaxVar';  % distortion function
 lambda = 0.125;      % distortion parameter
-delta_gamma = true; % delta-hedging
+delta_gamma = false; % delta-hedging
 %% states
 [u,m,d] = states_tri_tree(r,s,dt);
 %% pay off
