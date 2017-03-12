@@ -14,7 +14,7 @@ defaultHedging_type = 'Delta';
 addOptional(p,'hedging_type', defaultHedging_type)
 defaultGamma_range = [-0.1,0.1];
 addOptional(p,'gamma_range',defaultGamma_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
-defaultGamma_precision = 20;
+defaultGamma_precision = 400;
 addOptional(p,'gamma_precision',defaultGamma_precision,@ispositive);
 defaultDist = 'MinMaxVar';
 addOptional(p,'dist',defaultDist);
