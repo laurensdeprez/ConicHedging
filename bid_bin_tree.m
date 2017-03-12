@@ -1,8 +1,7 @@
-function [bid,bids,delta,deltas,gamma,gammas] = bid_bin_tree(S_0,u,d,r,T,K,option,varargin)
+function [bid,bids,delta,deltas,gamma,gammas] = bid_bin_tree(S_0,s,r,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');
-addRequired(p,'u',@ispositive);
-addRequired(p,'d',@ispositive);
+addRequired(p,'s',@ispositive);
 addRequired(p,'r',@ispositive);
 addRequired(p,'T',@ispositive);
 addRequired(p,'K');
@@ -17,10 +16,13 @@ defaultGamma_range = [-0.1,0.1];
 addOptional(p,'gamma_range',defaultGamma_range,@(x)validateattributes(x,{'numeric'},{'numel',2,'increasing'}));
 defaultGamma_precision = 20;
 addOptional(p,'gamma_precision',defaultGamma_precision,@ispositive);
-parse(p,S_0,u,d,r,T,K,option,varargin{:});
+defaultDist = 'MinMaxVar';
+addOptional(p,'dist',defaultDist);
+defaultLambda = 0.25;
+addOptional(p,'lambda',defaultLambda);
+parse(p,S_0,s,r,T,K,option,varargin{:});
 S_0 = p.Results.S_0;
-u = p.Results.u;
-d = p.Results.d;
+s = p.Results.s;
 r = p.Results.r;
 T = p.Results.T;
 K = p.Results.K;
@@ -30,7 +32,10 @@ delta_precision = p.Results.delta_precision;
 hedging_type = p.Results.hedging_type;
 gamma_range = p.Results.gamma_range;
 gamma_precision = p.Results.gamma_precision;
+dist = p.Results.dist;
+lambda = p.Results.lambda;
 % risk neutral up probability
+[u,d] = states_bin_tree(s,T);
 p = (exp(r*T)-d)/(u-d);  
 if (~isprobability(p))
     error('choose up and down state differently w.r.t. the interest')
@@ -51,9 +56,9 @@ switch hedging_type
             pi_u = f_u + deltas(i)*(u - exp(r*T))*S_0;
             pi_d = f_d + deltas(i)*(d - exp(r*T))*S_0;
             if (pi_u >= pi_d)
-                bids(i) = exp(-r*T)*((1-distortion(1-p))*pi_u+distortion(1-p)*pi_d);
+                bids(i) = exp(-r*T)*((1-distortion(1-p,dist,lambda))*pi_u+distortion(1-p,dist,lambda)*pi_d);
             else
-                bids(i) = exp(-r*T)*(distortion(p)*pi_u+(1-distortion(p))*pi_d);
+                bids(i) = exp(-r*T)*(distortion(p,dist,lambda)*pi_u+(1-distortion(p,dist,lambda))*pi_d);
             end 
         end
         [bid,i] = max(bids);
@@ -66,9 +71,9 @@ switch hedging_type
                 pi_u = f_u + deltas(i)*(u - exp(r*T))*S_0 + gammas(j)*(((u - exp(r*T))*S_0)^2 - exp_value);
                 pi_d = f_d + deltas(i)*(d - exp(r*T))*S_0 + gammas(j)*(((d - exp(r*T))*S_0)^2 - exp_value);
                 if (pi_u >= pi_d)
-                    bids(i) = exp(-r*T)*((1-distortion(1-p))*pi_u+distortion(1-p)*pi_d);
+                    bids(i) = exp(-r*T)*((1-distortion(1-p,dist,lambda))*pi_u+distortion(1-p,dist,lambda)*pi_d);
                 else
-                    bids(i) = exp(-r*T)*(distortion(p)*pi_u+(1-distortion(p))*pi_d);
+                    bids(i) = exp(-r*T)*(distortion(p,dist,lambda)*pi_u+(1-distortion(p,dist,lambda))*pi_d);
                 end 
             end
         end
