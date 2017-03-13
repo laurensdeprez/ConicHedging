@@ -18,7 +18,7 @@ defaultGamma_precision = 400;
 addOptional(p,'gamma_precision',defaultGamma_precision,@ispositive);
 defaultDist = 'MinMaxVar';
 addOptional(p,'dist',defaultDist);
-defaultLambda = 0.01;
+defaultLambda = 0.25;
 addOptional(p,'lambda',defaultLambda);
 defaultOld_bid = [0,0,0];
 addOptional(p,'old_bid',defaultOld_bid,@(x)validateattributes(x,{'numeric'},{'numel',3}))
