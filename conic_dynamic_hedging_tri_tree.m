@@ -17,6 +17,15 @@ f_mm = payoff(m*m*S_0,K,option);
 f_dm = payoff(d*m*S_0,K,option);
 f_dd = payoff(d*d*S_0,K,option);
 disp(['pay-offs ',num2str([f_uu,f_um,f_mm,f_dm,f_dd])])
+%% Risk free pricing
+[bid_u,~,~,~] = bid_tri_tree(u*S_0,s,r,dt,K,option,'dist',dist,'lambda',0,'hedged',false);
+[bid_m,~,~,~] = bid_tri_tree(m*S_0,s,r,dt,K,option,'dist',dist,'lambda',0,'hedged',false);
+[bid_d,~,~,~] = bid_tri_tree(d*S_0,s,r,dt,K,option,'dist',dist,'lambda',0,'hedged',false);
+disp(['intermediate prices ',num2str([bid_u,bid_m,bid_d])])
+% final stated (unhedged)
+old_bid = [bid_u,bid_m,bid_d];
+[bid,~,~,~] = bid_tri_tree(S_0,s,r,dt,K,option,'dist',dist,'lambda',0,'old_bid',old_bid,'hedged',false);
+disp(['final price ',num2str(bid)])
 %% Bid hedging
 if delta_gamma
 % intermediate state (delta-gamma hedged)
