@@ -14,6 +14,8 @@ defaultDist = 'MinMaxVar';
 addOptional(p,'dist',defaultDist);
 defaultLambda = 0.25;
 addOptional(p,'lambda',defaultLambda);
+defaultHedged = true;
+addOptional(p, 'hedged',defaultHedged, @(x)validateattributes(x,{'logical'},{'numel',1}))
 parse(p,S_0,s,r,T,K,option,varargin{:});
 S_0 = p.Results.S_0;
 s = p.Results.s;
@@ -25,6 +27,7 @@ delta_range = p.Results.delta_range;
 delta_precision = p.Results.delta_precision;
 dist = p.Results.dist;
 lambda = p.Results.lambda;
+hedged = p.Results.hedged;
 % risk neutral up probability
 [u,d] = states_bin_tree(s,T);
 p = (exp(r*T)-d)/(u-d);  
@@ -35,8 +38,13 @@ end
 f_u = payoff(u*S_0,K,option);         % option payout up
 f_d = payoff(d*S_0,K,option);         % option payout down
 % optimize
-n = delta_precision;
-deltas = linspace(delta_range(1),delta_range(2),n); 
+if hedged
+    n = delta_precision;
+    deltas = linspace(delta_range(1),delta_range(2),n); 
+else
+    n = 1;
+    deltas = 0;
+end
 asks = zeros(1,n);
 for i=1:n
     pi_u = f_u + deltas(i)*(u - exp(r*T))*S_0;
