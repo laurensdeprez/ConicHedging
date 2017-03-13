@@ -1,4 +1,4 @@
-function price = risk_neutral_tri(S_0,s,r,T,K,option)
+function [price,delta,gamma] = risk_neutral_tri(S_0,s,r,T,K,option)
 p = inputParser;
 addRequired(p,'S_0');
 addRequired(p,'s',@ispositive);
@@ -27,5 +27,9 @@ p_d = 1/6;                        % jump down
 ps = [p_u,p_m,p_d];
 %price
 price = exp(-r*T)*sum(f.*ps);
+%delta
+delta = (f_m-f_u)/((u-m)*S_0) + (u-m)/((u-d)*S_0)*((f_d-f_m)/(m-d)-(f_m-f_u)/(u-m));
+%gamma
+gamma = 1/((u-d)*S_0^2)*((f_d-f_m)/(m-d)-(f_m-f_u)/(u-m));
 end
 
