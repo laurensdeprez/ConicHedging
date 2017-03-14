@@ -1,6 +1,5 @@
 close all;
 %% conic delta hedging under B-S
-
 S_0 = 100;                       % init. stock price
 q = 0;                           % dividend 
 s = 0.2;                         % volatility
@@ -9,7 +8,7 @@ T = 1/12;                        % maturity
 K = S_0;                         % strike ATM
 N = 10000;                       % # monte carlo simulations (WARNING: bigger=slower)
 dist_type = 'MinMaxVar';         % distortion function
-lambda = 0.10;                   % parameter for distortion               
+lambda = 0.25;                   % parameter for distortion               
 delta_range = [-2,2];            % [delta_min, delta_max]
 delta_precision = 0.01;          % step between deltas
 option = 'call';                 % type of option considered
@@ -20,11 +19,13 @@ S_T = B_S(S_0,q,s,r,T,N);
 %% risk neutral
 % call option
 price = risk_neutral_EC_B_S(S_0,s,q,r,T,K);
-
+disp(['risk neutral price ',num2str(price)])
 %% bid
 [bid,bids,delta_b,deltas] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision);
+disp(['bid (d) ',num2str(bid)])
+disp(['bid delta (d) ',num2str(delta_b)])
 [u_bid,~,~,~] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision,'hedged',false);
-display(delta_b)
+disp(['bid ',num2str(u_bid)])
 figure()
 plot(deltas, bids,'LineWidth',2)
 hold on 
@@ -37,8 +38,10 @@ set(leg,'fontsize',12)
 
 %% ask 
 [ask,asks,delta_a,deltas] = ask_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision);
+disp(['ask (d) ',num2str(ask)])
+disp(['ask delta (d) ',num2str(delta_a)])
 [u_ask,~,~,~] = ask_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision,'hedged',false);
-display(delta_a)
+disp(['ask ',num2str(u_ask)])
 figure()
 plot(deltas, asks,'LineWidth',2)
 hold on 
