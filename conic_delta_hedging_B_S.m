@@ -66,6 +66,8 @@ figure();
 capital = asks-bids;
 u_cap = u_ask-u_bid;
 [M,I] = min(capital);
+disp(['capital (d) ',num2str(M)])
+disp(['capital delta (d) ',num2str(deltas(I))])
 plot(deltas,capital,'LineWidth',2)
 hold on 
 plot(deltas, (ask-bid)*ones(1,length(deltas)) ,'r--','LineWidth',2)
