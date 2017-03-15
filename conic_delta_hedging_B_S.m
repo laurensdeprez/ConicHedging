@@ -19,7 +19,16 @@ S_T = B_S(S_0,q,s,r,T,N);
 %% risk neutral
 % call option
 price = risk_neutral_EC_B_S(S_0,s,q,r,T,K);
+delta_BS=normcdf(B_S_d1(S_0,q,s,r,T,K));
+BA = exp(r*T)*(delta_BS*S_0-price); 
+f = payoff(S_T,K,option);
+hedge=f+BA-delta_BS.*S_T;
+figure()
+hist(hedge)
+xlabel('hedged portfolio','FontSize',15)
+disp(['delta hedge portfolio (mean) ',num2str(mean(hedge))])
 disp(['risk neutral price ',num2str(price)])
+
 %% bid
 [bid,bids,delta_b,deltas] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision);
 disp(['bid (d) ',num2str(bid)])
@@ -59,10 +68,11 @@ u_cap = u_ask-u_bid;
 [M,I] = min(capital);
 plot(deltas,capital,'LineWidth',2)
 hold on 
+plot(deltas, (ask-bid)*ones(1,length(deltas)) ,'r--','LineWidth',2)
 plot(deltas, u_cap*ones(1,length(deltas)) ,'b--','LineWidth',2)
 xlabel('\Delta','FontSize',15)
 ylabel('capital portfolio','FontSize',15)
-leg = legend('\Delta hedged','unhedged');
+leg = legend('\Delta hedged','ask-bid','unhedged');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
 
