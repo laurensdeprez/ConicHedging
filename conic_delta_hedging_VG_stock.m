@@ -6,25 +6,31 @@ q = 0;                           % dividend
 s = 0.2;                         % volatility
 v = 0.75;                        % param 2 of VG
 th = -0.3;                       % param 3 of VG
-r = 0.02;                        % interest
-T = 1/52;                        % maturity
-K = [110,120];%S_0;                         % strike ATM
+r = 0.01;                        % interest
+T = 1/12;                        % maturity
+K = S_0;                         % strike ATM
 N = 10000;                       % # monte carlo simulations (WARNING: bigger=slower)
 dist_type = 'MinMaxVar';         % distortion function
-lambda = 0.015;                  % parameter for distortion               
-delta_range = [-2,0];            % [delta_min, delta_max]
+lambda = 0.25;                   % parameter for distortion               
+delta_range = [-2,2];            % [delta_min, delta_max]
 delta_precision = 0.05;          % step between deltas
-option = 'callspread';                 % type of option considered
+option = 'call';                 % type of option considered
 
-if false
-%% hedging
-% stock process
+%% stock process
 S_T = VG_stock(S_0,q,s,v,th,r,T,N);
 
-% bid
+%% risk free
+% call option
+[price,k,C] = risk_neutral_EC_VG(S_0,s,v,th,r,T,K);
+disp(['risk neutral price ',num2str(price)])
+% delta_VG=normcdf(B_S_d1(S_0,s,r,T,K));
+
+%% bid
 [bid,bids,delta_b,deltas] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision);
+disp(['bid (d) ',num2str(bid)])
+disp(['bid delta (d) ',num2str(delta_b)])
 [u_bid,~,~,~] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision,'hedged',false);
-display(delta_b)
+disp(['bid ',num2str(u_bid)])
 figure()
 plot(deltas, bids,'LineWidth',2)
 hold on 
@@ -35,10 +41,12 @@ leg = legend('\Delta hedged','unhedged');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
 
-% ask 
+%% ask 
 [ask,asks,delta_a,deltas] = ask_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision);
+disp(['ask (d) ',num2str(ask)])
+disp(['ask delta (d) ',num2str(delta_a)])
 [u_ask,~,~,~] = ask_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision,'hedged',false);
-display(delta_a)
+disp(['ask ',num2str(u_ask)])
 figure()
 plot(deltas, asks,'LineWidth',2)
 hold on 
@@ -49,20 +57,22 @@ leg = legend('\Delta hedged','unhedged');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
 
-% capital 
+%% capital 
 figure();
 capital = asks-bids;
 u_cap = u_ask-u_bid;
 [M,I] = min(capital);
+disp(['capital (d) ',num2str(M)])
+disp(['capital delta (d) ',num2str(deltas(I))])
 plot(deltas,capital,'LineWidth',2)
 hold on 
+plot(deltas, (ask-bid)*ones(1,length(deltas)) ,'r--','LineWidth',2)
 plot(deltas, u_cap*ones(1,length(deltas)) ,'b--','LineWidth',2)
 xlabel('\Delta','FontSize',15)
 ylabel('capital portfolio','FontSize',15)
-leg = legend('\Delta hedged','unhedged');
+leg = legend('\Delta hedged','ask-bid','unhedged');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
-end
 
 if false
 %% stock process
