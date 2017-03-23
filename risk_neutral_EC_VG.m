@@ -1,4 +1,4 @@
-function [price,k,C] = risk_neutral_EC_VG(S_0,s,v,th,r,T,K)
+function [price,KK,C] = risk_neutral_EC_VG(S_0,s,v,th,r,T,K)
 p = inputParser;
 addRequired(p,'S_0');
 addRequired(p,'s',@ispositive);
@@ -21,7 +21,7 @@ omega= 1/v*log(1-s^2*v/2-th*v);
 phi = @(u)(exp(1i*u*(log(S_0)+(r + omega)*T)).*char_function_VG(u,C_VG,G_VG,M_VG).^T);
 
 N = 4096;
-a = 1.5;
+a = 1/4*(sqrt(th^2/s^4+2/s^2/v)-th/s^2-1);
 eta = 0.25;
 lambda = 2*pi/N/eta;
 b = lambda*N/2;
