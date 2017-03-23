@@ -16,5 +16,7 @@ function f = payoff(S_T,K,type)
             f = payoff_put(S_T,K);  
         case 'callspread'
             f = payoff_callspread(S_T,K);
+        case 'straddle'
+            f = payoff_straddle(S_T,K);
     end
 end
