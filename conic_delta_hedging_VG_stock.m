@@ -21,8 +21,11 @@ S_T = VG_stock(S_0,q,s,v,th,r,T,N);
 
 %% risk free
 % call option
+price = exp(-r*T)*sum(payoff(S_T,K,option))/N;
+disp(['risk neutral price (MC)',num2str(price)])
 [price,k,C] = risk_neutral_EC_VG(S_0,s,v,th,r,T,K);
 disp(['risk neutral price ',num2str(price)])
+
 % delta_VG=normcdf(B_S_d1(S_0,s,r,T,K));
 
 %% bid
