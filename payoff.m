@@ -1,6 +1,6 @@
 function f = payoff(S_T,K,type)
     p = inputParser();
-    validType = {'call','put','callspread'};
+    validType = {'call','put','callspread','straddle'};
     checkType = @(x) any(validatestring(x,validType));
     addRequired(p,'S_T');
     addRequired(p,'K');
