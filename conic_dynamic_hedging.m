@@ -13,8 +13,8 @@ dist = 'MinMaxVar';         % distortion type
 lambda = 0.015;             % distortion parameter
 M = 10;                     % 2M+1-nomial approximation
 N = 50;
-delta = 0.0740;%0.0763;             % jump size 
-p0 = 0.9407;%0.9492;                % jump zero probability 
+delta = 0.0763;%0.0740;             % jump size 
+p0 = 0.9492;%0.9407;                % jump zero probability 
 if optimize
     x0 = [0.07,0.9];    
     x = fit_multinomial_VG(M,N,C_VG,G_VG,M_VG,x0);
@@ -130,11 +130,4 @@ ylabel('spread','FontSize',15)
 leg = legend('unhedged (1y)','unhedged (6m)','unhedged (1m)','hedged (1y)','hedged (6m)','hedged (1m)','cap. hedged (1y)','cap. hedged (6m)','cap. hedged (1m)');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
-% test figure
-figure()
-plot(S,f_cap(:,floor(end/2),3),'b','LineWidth',2)
-hold on
-plot(S,f_cap(:,floor(end/2),6),'b:','LineWidth',2)
-plot(S,f_cap(:,floor(end/2),7),'g:','LineWidth',2)
-legend('unhedged','diff hedges','specific hedge')
 end
