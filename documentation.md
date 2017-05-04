@@ -1,15 +1,41 @@
 ConicHedging
 ============
 
-## scripts
+## binomial tree 
 
-Example5_3.m : script for example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
+### scripts
 
 conic_delta_hedging_bin_tree.m : script for delta hedging in binomial trees
 
-conic_delta_hedging_tri_tree.m : script for delta hedging in trinomial trees
+### functions
+
+## trinomial tree 
+
+### scripts
+
+### functions
+
+## Black-Scholes scripts and functions
+
+### scripts
 
 conic_delta_hedging_B_S.m : script for delta hedging in Black-Scholes
+
+### functions
+
+B_S.m: simulation of N stock prices S_T under Black-Scholes
+
+B_S_d1.m : calculates d1 of the Black-Scholes model
+
+B_S_d2.m : calculates d2 of the Black-Scholes model
+
+## Variance-Gamma scripts and functions
+
+## extra scripts
+
+Example5_3.m : script for example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
+
+conic_delta_hedging_tri_tree.m : script for delta hedging in trinomial trees
 
 multinomial_approx_VG.m : script for approximating the VG process with a multinomial tree
 
@@ -43,7 +69,7 @@ bid_B_S.m : bid price calculation functions under Black-Scholes
 
 ask_B_S.m : ask price calculation functions under Black-Scholes
 
-## payoff functions
+## payoff of different financial derivatives
 
 payoff.m : calling different payoff functions
 
@@ -51,7 +77,9 @@ payoff_call.m : payoff of European call option
 
 payoff_put.m : payoff of European put option
 
-payoff_callspread : payoff of call spread option	
+payoff_callspread : payoff of callspread option	
+
+payoff_straddle : payoff of straddle option
 
 ## characteristic functions
 
