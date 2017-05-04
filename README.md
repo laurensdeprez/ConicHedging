@@ -9,4 +9,6 @@ by the book "Applied Conic Finance" by D. Madan and W. Schoutens
 
 ## Requirements
 
-[MATLAB](https://www.mathworks.com/products/matlab/) or [GNU Octave](https://www.gnu.org/software/octave/)(not tested)
+[MATLAB](https://www.mathworks.com/products/matlab/) 
+
+[GNU Octave](https://www.gnu.org/software/octave/) (not tested)
