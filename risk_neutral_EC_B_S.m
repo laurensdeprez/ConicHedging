@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% risk neutral price of European call under Black-Scholes
 function price = risk_neutral_EC_B_S(S_0,s,q,r,T,K)
 p = inputParser;
 addRequired(p,'S_0');

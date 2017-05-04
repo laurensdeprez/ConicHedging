@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% bid prices in Black-Scholes
 function [bid,bids,delta,deltas] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,varargin)
 p = inputParser;
 addRequired(p,'S_0');

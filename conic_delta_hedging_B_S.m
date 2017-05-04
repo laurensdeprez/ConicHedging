@@ -1,4 +1,10 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+clear;
 close all;
+
 %% conic delta hedging under B-S
 S_0 = 100;                       % init. stock price
 q = 0;                           % dividend 
@@ -103,4 +109,3 @@ leg = legend('\Delta_{bid}','\Delta_{ask}','\Delta_{capital}','-\Delta_{B-S}');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
 end
-
