@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% general payoff function
 function f = payoff(S_T,K,type)
     p = inputParser();
     validType = {'call','put','callspread','straddle'};
@@ -6,6 +11,7 @@ function f = payoff(S_T,K,type)
     addRequired(p,'K');
     addRequired(p,'type',checkType);
     parse(p,S_T,K,type);
+    
     S_T = p.Results.S_T;
     K = p.Results.K;
     type = p.Results.type;
