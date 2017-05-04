@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% general distortion function
 function p_dist = distortion(u,varargin)
     p = inputParser;
     defaultLabel = 'MinMaxVar';
@@ -12,7 +17,6 @@ function p_dist = distortion(u,varargin)
     u = p.Results.u;
     label = p.Results.label;
     lambda = p.Results.lambda;
-    % call a distortion function
     switch label 
         case 'MinVar'
             p_dist = MinVar(u,lambda);

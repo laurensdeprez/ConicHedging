@@ -1,9 +1,12 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
 %% Wang transformation
 function p_dist = WangTrans(u,varargin)
     p = inputParser;
-    defaultLambda = 0.25;
     addRequired(p,'u',@isprobability);
-    addOptional(p,'lambda',defaultLambda,@ispositive)
+    addRequired(p,'lambda',@ispositive)
     parse(p,u,varargin{:});
     
     p_dist = normcdf(norminv(p.Results.u)+ p.Results.lambda);
