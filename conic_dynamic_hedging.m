@@ -4,8 +4,8 @@ optimize = false;
 T = 1;                      % maturity (in years)
 S_0 = 100;                  % init stock value
 r = 0.02;                   % risk-free interest
-K = [110,120];              % call spread strikes
-option = 'callspread';      % option type
+K = S_0;%[110,120];              % call spread strikes
+option = 'straddle';%'callspread';      % option type
 s = 0.2;                    % VG process parameters
 v = 0.75;
 th = -0.3;
@@ -13,8 +13,8 @@ dist = 'MinMaxVar';         % distortion type
 lambda = 0.015;             % distortion parameter
 M = 10;                     % 2M+1-nomial approximation
 N = 50;
-delta = 0.0763;%0.0740;             % jump size 
-p0 = 0.9492;%0.9407;                % jump zero probability 
+delta = 0.0740;             % jump size 
+p0 = 0.9407;                % jump zero probability 
 if optimize
     x0 = [0.07,0.9];    
     x = fit_multinomial_VG(M,N,C_VG,G_VG,M_VG,x0);
@@ -91,7 +91,7 @@ plot(S,f_cap(:,floor(end/12),1),'r','LineWidth',2)
 plot(S,f_cap(:,end,4),'b:','LineWidth',2)
 plot(S,f_cap(:,floor(end/2),4),'g:','LineWidth',2)
 plot(S,f_cap(:,floor(end/12),4),'r:','LineWidth',2)
-axis([70 150 0 10.5])
+%axis([70 150 0 10.5])
 xlabel('Stock price','FontSize',15)
 ylabel('bid price','FontSize',15)
 leg = legend('call spread payoff','unhedged bid (1y)','unhedged bid (6m)','unhedged bid (1m)','hedged bid (1y)','hedged bid (6m)','hedged bid (1m)');
@@ -107,7 +107,7 @@ plot(S,f_cap(:,floor(end/12),2),'r','LineWidth',2)
 plot(S,f_cap(:,end,5),'b:','LineWidth',2)
 plot(S,f_cap(:,floor(end/2),5),'g:','LineWidth',2)
 plot(S,f_cap(:,floor(end/12),5),'r:','LineWidth',2)
-axis([70 150 0 10.5])
+%axis([70 150 0 10.5])
 xlabel('Stock price','FontSize',15)
 ylabel('ask price','FontSize',15)
 leg = legend('call spread payoff','unhedged ask (1y)','unhedged ask (6m)','unhedged ask (1m)','hedged ask (1y)','hedged ask (6m)','hedged ask (1m)');
