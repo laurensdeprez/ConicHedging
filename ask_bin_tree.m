@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% ask prices in binomial tree model
 function [ask,asks,delta,deltas] = ask_bin_tree(S_0,s,r,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');
@@ -17,6 +22,7 @@ addOptional(p,'lambda',defaultLambda);
 defaultHedged = true;
 addOptional(p, 'hedged',defaultHedged, @(x)validateattributes(x,{'logical'},{'numel',1}))
 parse(p,S_0,s,r,T,K,option,varargin{:});
+
 S_0 = p.Results.S_0;
 s = p.Results.s;
 r = p.Results.r;

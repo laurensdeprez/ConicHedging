@@ -5,21 +5,29 @@ ConicHedging
 
 ### scripts
 
-conic_delta_hedging_bin_tree.m : script for delta hedging in binomial trees
+conic_delta_hedging_bin_tree.m : delta hedging in binomial trees
 
 ### functions
+
+states_bin_tree.m : calculates the Cox-Ross-Rubinstein up and down states of the binom. tree 
+
+bid_bin_tree.m : bid price calculation functions in binomial tree
+
+ask_bin_tree.m : ask price calculation functions in binomial tree
 
 ## trinomial tree 
 
 ### scripts
 
+conic_delta_hedging_tri_tree.m : delta hedging in trinomial trees
+
 ### functions
 
-## Black-Scholes scripts and functions
+## Black-Scholes 
 
 ### scripts
 
-conic_delta_hedging_B_S.m : script for delta hedging in Black-Scholes
+conic_delta_hedging_B_S.m : delta hedging in Black-Scholes
 
 ### functions
 
@@ -29,17 +37,19 @@ B_S_d1.m : calculates d1 of the Black-Scholes model
 
 B_S_d2.m : calculates d2 of the Black-Scholes model
 
-## Variance-Gamma scripts and functions
+## Variance-Gamma
+
+### scripts
+
+multinomial_approx_VG.m : approximating the VG process with a multinomial tree
+
+conic_dynamic_hedging.m : dynamic hedging 
+
+### functions
 
 ## extra scripts
 
-Example5_3.m : script for example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
-
-conic_delta_hedging_tri_tree.m : script for delta hedging in trinomial trees
-
-multinomial_approx_VG.m : script for approximating the VG process with a multinomial tree
-
-conic_dynamic_hedging.m : script for dynamic hedging 
+Example5_3.m : example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
 
 ## distortion functions
 
@@ -57,9 +67,7 @@ MaxMinVar.m : MAXMINVAR distortion function
 
 ## pricing functions
 
-bid_bin_tree.m : bid price calculation functions in binomial tree
 
-ask_bin_tree.m : ask price calculation functions in binomial tree
 
 bid_tri_tree.m : bid price calculation functions in trinomial tree
 

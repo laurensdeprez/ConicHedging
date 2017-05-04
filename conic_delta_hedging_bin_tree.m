@@ -1,5 +1,10 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
 clear;
 close all;
+
 %% conic delta hedging in binomial tree
 S_0 = 100;                      % init. stock price
 s = 0.2;                        % volatility
@@ -33,7 +38,6 @@ ylabel('bid portfolio','FontSize',15)
 leg = legend('\Delta line','-\Delta_{tree}','unhedged');
 set(leg,'FontSize',12)
 set(gca,'fontsize',12)
-
 %% ask 
 [ask,asks,delta,deltas] = ask_bin_tree(S_0,s,r,T,K,type,delta_range,delta_precision);
 disp(['ask (d) ',num2str(ask)])
