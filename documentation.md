@@ -1,7 +1,7 @@
 ConicHedging
 ============
 
-## binomial tree 
+## Binomial tree 
 
 ### scripts
 
@@ -11,17 +11,27 @@ conic_delta_hedging_bin_tree.m : delta hedging in binomial trees
 
 states_bin_tree.m : calculates the Cox-Ross-Rubinstein up and down states of the binom. tree 
 
-bid_bin_tree.m : bid price calculation functions in binomial tree
+bid_bin_tree.m : bid price calculation in binomial tree
 
-ask_bin_tree.m : ask price calculation functions in binomial tree
+ask_bin_tree.m : ask price calculation in binomial tree
 
-## trinomial tree 
+## Trinomial tree 
 
 ### scripts
 
 conic_delta_hedging_tri_tree.m : delta hedging in trinomial trees
 
+conic_delta__gamma_hedging_bin_tree.m : delta gamma hedging in binomial trees
+
+conic_dynamic_hedging_tri_tree.m : conic dynamic delta-gamma hedging of trinom. tree
+
 ### functions
+
+risk_neutral_tri.m : risk neutral pricing of option in trinomial tree
+
+bid_tri_tree.m : bid price calculation in trinomial tree
+
+ask_tri_tree.m : ask price calculation in trinomial tree
 
 ## Black-Scholes 
 
@@ -69,9 +79,7 @@ MaxMinVar.m : MAXMINVAR distortion function
 
 
 
-bid_tri_tree.m : bid price calculation functions in trinomial tree
 
-ask_tri_tree.m : ask price calculation functions in trinomial tree
 
 bid_B_S.m : bid price calculation functions under Black-Scholes
 
