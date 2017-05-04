@@ -1,5 +1,11 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+clear;
 close all;
-%% conic Delta-Gamma hedging in trinomial tree
+
+%% conic delta-gamma hedging in trinomial tree
 S_0 = 100;                       % init. stock price
 s = 0.2;                         % volatility
 r = 0.01;                        % interest

@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% bid price calculation in trinomial tree
 function [bid,bids,delta,deltas,gamma,gammas] = bid_tri_tree(S_0,s,r,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');

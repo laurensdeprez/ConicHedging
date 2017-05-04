@@ -1,4 +1,10 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+clear;
 close all;
+
 %% conic delta hedging in trinomial tree
 S_0 = 100;                       % init. stock price
 s = 0.2;                         % volatility
@@ -14,7 +20,7 @@ disp(['risk neutral price ',num2str(price)])
 %% bid
 [bid_h,bids,delta_bid,deltas] = bid_tri_tree(S_0,s,r,T,K,option_type,delta_range,delta_precision);
 disp(['bid (d) ',num2str(bid_h)])
-disp(['bid delta (d) ',num2str(delta)])
+disp(['bid delta (d) ',num2str(delta_bid)])
 [bid,~,~,~] = bid_tri_tree(S_0,s,r,T,K,option_type,delta_range,delta_precision,'hedged',false);
 disp(['bid ',num2str(bid)])
 figure()
@@ -29,7 +35,7 @@ set(leg,'fontsize',12)
 %% ask
 [ask_h,asks,delta_ask,deltas] = ask_tri_tree(S_0,s,r,T,K,option_type,delta_range,delta_precision);
 disp(['ask (d) ',num2str(ask_h)])
-disp(['ask delta (d) ',num2str(delta)])
+disp(['ask delta (d) ',num2str(delta_ask)])
 [ask,~,~,~] = ask_tri_tree(S_0,s,r,T,K,option_type,delta_range,delta_precision,'hedged',false);
 disp(['ask ',num2str(ask)])
 figure()
