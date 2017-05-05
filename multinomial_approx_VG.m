@@ -1,4 +1,10 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+clear;
 close all;
+
 %% Multinomial approximation of VG process
 M = 10;         % 2M+1 nomial tree
 N = 50;         % time steps
