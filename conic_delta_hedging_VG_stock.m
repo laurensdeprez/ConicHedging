@@ -1,6 +1,11 @@
-close all;
-%% conic delta hedging under VG stock model
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
 
+close all;
+clear;
+
+%% conic delta hedging under VG stock model
 S_0 = 100;                       % init. stock price
 q = 0;                           % dividend 
 s = 0.2;                         % volatility
@@ -25,9 +30,8 @@ price = exp(-r*T)*sum(payoff(S_T,K,option))/N;
 disp(['risk neutral price (MC)',num2str(price)])
 [price,k,C] = risk_neutral_EC_VG(S_0,s,v,th,r,T,K);
 disp(['risk neutral price ',num2str(price)])
-
-% delta_VG=normcdf(B_S_d1(S_0,s,r,T,K));
-
+delta_VG = risk_neutral_EC_VG_delta(S_0,s,v,th,r,T,K);
+disp(['risk neutral delta ',num2str(delta_VG)])
 %% bid
 [bid,bids,delta_b,deltas] = bid_B_S(S_0,S_T,r,T,N,K,option,dist_type,lambda,delta_range,delta_precision);
 disp(['bid (d) ',num2str(bid)])

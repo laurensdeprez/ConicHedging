@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% Simulation of N stock prices S_T under VG stock model
 function S_T = VG_stock(S_0,q,s,v,th,r,T,N)
     p = inputParser;
     addRequired(p,'S_0',@ispositive);

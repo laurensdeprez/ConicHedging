@@ -77,6 +77,12 @@ char_function_multinomial.m : characteristic function of multinomial tree
 
 fit_multinomial_VG.m : fit multinomial tree to VG process by matching characteristic functions
 
+VG_stock.m : Simulation of N stock prices S_T under VG stock model
+
+risk_neutral_EC_VG.m : risk neutral pricing of european call under VG using fft
+
+risk_neutral_EC_VG_delta.m : risk neutral pricing delta of european call under VG using fft
+
 ## distortion functions
 
 distortion.m : calling the different distortions

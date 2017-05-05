@@ -1,3 +1,8 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% risk neutral pricing of european call under VG using fft
 function [price,KK,C] = risk_neutral_EC_VG(S_0,s,v,th,r,T,K)
 p = inputParser;
 addRequired(p,'S_0');
