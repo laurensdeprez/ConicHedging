@@ -1,6 +1,11 @@
-close all
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+clear;
+close all;
+
 %% Applied conic finance: Example 5.3
-%------------------------------------
 N = 10;                     %number of simulation runs
 K = 100;                    %strike
 T = 1;                      %maturity
