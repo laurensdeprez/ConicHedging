@@ -61,13 +61,21 @@ ask_B_S.m : ask price calculation under Black-Scholes
 
 multinomial_approx_VG.m : approximating the VG process with a multinomial tree
 
+conic_delta_hedging_VG_stock.m : conic delta hedging under VG stock model
+
 conic_dynamic_hedging.m : dynamic hedging 
 
 ### functions
 
-## extra scripts
+VG_param.m : change variance gamma parametrisation
 
-Example5_3.m : example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
+cond_prob_multinomial.m : conditional jump probabilities for multinomial tree approximation of VG process
+
+char_function_VG.m : characteristic function of VG process
+
+char_function_multinomial.m : characteristic function of multinomial tree
+
+fit_multinomial_VG.m : fit multinomial tree to VG process by matching characteristic functions
 
 ## distortion functions
 
@@ -107,9 +115,13 @@ isprobabilty.m : check if input is  numeric and between zero and one
 
 ispositive.m : check if input is  numeric and positive
 
+## extra scripts
+
+Example5_3.m : example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
+
 ## other functions
 
-cond_prob_multinomial.m : determine conditional jump probabilities for multinomial tree when approximating a VG process
+
 
 
 
