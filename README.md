@@ -1,7 +1,8 @@
 ConicHedging
 ============
 Code to perform hedging in the conic finance framework inspired 
-by the book "Applied Conic Finance" by D. Madan and W. Schoutens
+by the book Applied Conic Finance by D. Madan and W. Schoutens 
+and implemented as part of a thesis project
 
 **License:** BSD 3-clause, see [LICENSE](LICENSE).
 

@@ -125,10 +125,4 @@ ispositive.m : check if input is  numeric and positive
 
 Example5_3.m : example 5.3 in ACF<sup>[1](#myfootnote1)</sup>
 
-## other functions
-
-
-
-
-
 <sup><a name="myfootnote1">1</a></sup> ACF: Applied Conic Finance by D. Madan and W. Schoutens 
