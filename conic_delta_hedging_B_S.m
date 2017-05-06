@@ -5,7 +5,7 @@
 clear;
 close all;
 
-%% conic delta hedging under B-S
+%% conic delta hedging under Black-Scholes
 S_0 = 100;                       % init. stock price
 q = 0;                           % dividend 
 s = 0.2;                         % volatility
@@ -18,7 +18,7 @@ lambda = 0.25;                   % parameter for distortion
 delta_range = [-2,2];            % [delta_min, delta_max]
 delta_precision = 0.01;          % step between deltas
 option = 'call';                 % type of option considered
-different_strikes = 0;
+different_strikes = 0;           % hedging for different strikes (0 = False, 1 = True)
 
 S_T = B_S(S_0,q,s,r,T,N);
 
