@@ -27,7 +27,7 @@ conic_dynamic_hedging_tri_tree.m : conic dynamic delta-gamma hedging of trinomia
 
 ### functions
 
-states_tri_tree.m : calculates up, middle and down state for a trinomial tree
+states_tri_tree.m : calculates risk neutral up, middle and down state for a trinomial tree
 
 risk_neutral_tri.m : risk neutral pricing of option in trinomial tree
 
@@ -51,9 +51,9 @@ B_S_d2.m : calculates d2 of the Black-Scholes model
 
 B_S.m : simulation of N stock prices S_T under Black-Scholes
 
-bid_B_S.m : bid price calculation under Black-Scholes
+bid_B_S.m : bid price calculation under Black-Scholes (or other continuous models S_T) 
 
-ask_B_S.m : ask price calculation under Black-Scholes
+ask_B_S.m : ask price calculation under Black-Scholes (or other continuous models S_T)
 
 ## Variance-Gamma
 
@@ -63,7 +63,7 @@ multinomial_approx_VG.m : approximating the VG process with a multinomial tree
 
 conic_delta_hedging_VG_stock.m : conic delta hedging under VG stock model
 
-conic_dynamic_hedging.m : dynamic hedging 
+conic_dynamic_hedging_VG_stock.m : dynamic hedging of the VG stock multinomial approximation
 
 ### functions
 
@@ -82,6 +82,14 @@ VG_stock.m : Simulation of N stock prices S_T under VG stock model
 risk_neutral_EC_VG.m : risk neutral pricing of european call under VG using fft
 
 risk_neutral_EC_VG_delta.m : risk neutral pricing delta of european call under VG using fft
+
+bid_N_tree. : dynamic bid price calculation for non homogeneous grid with local multinomial VG approximation
+
+ask_N_tree.m : dynamic ask price calculation for non homogeneous grid with local multinomial VG approximation
+
+capital_N_tree : dynamic capital calculation for non homogeneous grid with local multinomial VG approximation
+
+NUG.m : Generates a non homogeneous grid
 
 ## distortion functions
 

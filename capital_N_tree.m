@@ -1,11 +1,16 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% dynamic capital calculation for non homogeneous grid with local multinomial VG approximation
 function [S,f,Delta,deltas] = capital_N_tree(S_0,r,delta,p0,M,N,s,v,th,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');
 addRequired(p,'r',@ispositive);
 addRequired(p,'delta',@ispositive);
 addRequired(p,'p0',@isprobability);
-addRequired(p,'M',@ispositive);%integer
-addRequired(p,'N',@ispositive);%integer
+addRequired(p,'M',@ispositive);
+addRequired(p,'N',@ispositive);
 addRequired(p,'s',@isnumeric);
 addRequired(p,'v',@isnumeric);
 addRequired(p,'th',@isnumeric);
@@ -48,7 +53,6 @@ ps = floor(ps*10^11)/10^11;
 x = -(1:M)*delta;
 y = (1:M)*delta;
 % states
-% kill the hardcoding later
 num_prices = 50;
 [logS,S] = NUG(S_0,150,50,0.075,num_prices);
 

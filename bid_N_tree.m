@@ -1,11 +1,16 @@
+% This file is part of ConicHedging
+% Copyright (c) 2017 Laurens Deprez and Wim Schoutens
+% License: BSD 3-clause (see file LICENSE)
+
+%% dynamic bid price calculation for non homogeneous grid with local multinomial VG approximation
 function [S,f,Delta,deltas] = bid_N_tree(S_0,r,delta,p0,M,N,s,v,th,T,K,option,varargin)
 p = inputParser;
 addRequired(p,'S_0');
 addRequired(p,'r',@ispositive);
 addRequired(p,'delta',@ispositive);
 addRequired(p,'p0',@isprobability);
-addRequired(p,'M',@ispositive);%integer
-addRequired(p,'N',@ispositive);%integer
+addRequired(p,'M',@ispositive);
+addRequired(p,'N',@ispositive);
 addRequired(p,'s',@isnumeric);
 addRequired(p,'v',@isnumeric);
 addRequired(p,'th',@isnumeric);
@@ -48,7 +53,6 @@ ps = floor(ps*10^11)/10^11;
 x = -(1:M)*delta;
 y = (1:M)*delta;
 % states
-% kill the hardcoding later
 num_prices = 50;
 [logS,S] = NUG(S_0,150,50,0.075,num_prices);
 
@@ -70,14 +74,14 @@ for ii=2:(N+1) %time loop
     for jj=1:num_prices %stock prices loop
         local_tree = exp(logS(jj)+(r+omega)*dt+[x,0,y]);
         local_tree_f = interp1(S,f(:,ii-1,1),local_tree,'PCHIP','extrap');
-        [sorted_tree_f,I] = bubblesort(local_tree_f);
+        [sorted_tree_f,I] = sort(local_tree_f);
         dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
         dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
         f(jj,ii,1) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_tree_f));
         for kk=1:n%delta hedge loop
             local_tree_f = interp1(S,f(:,ii-1,2),local_tree,'PCHIP','extrap');
             hedge = local_tree_f + deltas(kk)*(local_tree - exp(r*dt)*S(jj));
-            [sorted_hedge,I]=sort(hedge);
+            [sorted_hedge,I]= sort(hedge);
             dist_cdf = distortion(cumsum(ps(I)),dist,lambda);
             dist_sorted_ps = [dist_cdf(1),diff(dist_cdf)];
             hedge_bids(kk) = exp(-r*dt)*sum((dist_sorted_ps).*(sorted_hedge));
