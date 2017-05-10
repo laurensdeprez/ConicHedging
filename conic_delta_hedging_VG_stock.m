@@ -5,7 +5,7 @@
 close all;
 clear;
 
-%% conic delta hedging under VG stock model
+%% conic delta hedging under Variance-Gamma stock model
 S_0 = 100;                       % init. stock price
 q = 0;                           % dividend 
 s = 0.2;                         % volatility
@@ -17,9 +17,10 @@ K = S_0;                         % strike ATM
 N = 10000;                       % # monte carlo simulations (WARNING: bigger=slower)
 dist_type = 'MinMaxVar';         % distortion function
 lambda = 0.25;                   % parameter for distortion               
-delta_range = [-2,2];            % [delta_min, delta_max]
+delta_range = [-2,0];            % [delta_min, delta_max]
 delta_precision = 0.05;          % step between deltas
 option = 'call';                 % type of option considered
+different_strikes = 1;           % hedging for different strikes (0 = False, 1 = True)
 
 %% stock process
 S_T = VG_stock(S_0,q,s,v,th,r,T,N);
@@ -80,6 +81,33 @@ ylabel('capital portfolio','FontSize',15)
 leg = legend('\Delta hedged','ask-bid','unhedged');
 set(gca,'fontsize',12)
 set(leg,'fontsize',12)
+
+if different_strikes
+%% different strikes
+K = linspace(85,115,120);           % strikes
+delta_bid = zeros(length(K),1);     % delta bid
+delta_ask = zeros(length(K),1);     % delta ask
+delta_capital = zeros(length(K),1); % delta capital
+for j=1:length(K)
+    [bid,bids,delta_bid(j),~] = bid_B_S(S_0,S_T,r,T,N,K(j),option,dist_type,lambda,delta_range,delta_precision);
+    [ask,asks,delta_ask(j),deltas] = ask_B_S(S_0,S_T,r,T,N,K(j),option,dist_type,lambda,delta_range,delta_precision);
+    [M,I]= min(asks-bids);
+    delta_capital(j) = deltas(I);
+end
+K1 = linspace(85,115,30);           
+delta_VG = risk_neutral_EC_VG_delta(S_0,s,v,th,r,T,K1);
+figure()
+plot(K,delta_bid,'LineWidth',2)
+hold on
+plot(K,delta_ask,'LineWidth',2)
+plot(K,delta_capital,'LineWidth',2)
+plot(K1,-delta_VG,'LineWidth',2)
+xlabel('K','FontSize',15)
+ylabel('\Delta','FontSize',15)
+leg = legend('\Delta_{bid}','\Delta_{ask}','\Delta_{capital}','-\Delta_{VG}');
+set(gca,'fontsize',12)
+set(leg,'fontsize',12)
+end
 
 if false
 %% stock process
